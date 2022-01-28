@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
 import com.jerrykel.fackeperson.models.FakeGeneratorResults
 import com.jerrykel.fackeperson.models.FakeProfile
@@ -18,11 +19,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainActivity : AppCompatActivity() {
     private var retrofit:Retrofit? = null
     private var service:FakeProfileService? =null
+    private var spinner:Spinner? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         retrofit = Retrofit.Builder().baseUrl("https://randomuser.me/api").addConverterFactory(GsonConverterFactory.create()).build()
         service = retrofit?.create(FakeProfileService::class.java)
+        spinner = findViewById(R.id.spinnerLang)
+        spinner?.isSelected =true
         (findViewById<Button>(R.id.buttonGenerate)).setOnClickListener {
             randomProfile()
         }
@@ -32,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     }
     private fun randomProfile(){
-        service?.randomProfile()?.enqueue(object:Callback<FakeGeneratorResults>{
+        service?.randomProfile(spinner?.selectedItem.toString())?.enqueue(object:Callback<FakeGeneratorResults>{
             override fun onResponse(
                 call: Call<FakeGeneratorResults>,
                 response: Response<FakeGeneratorResults>
