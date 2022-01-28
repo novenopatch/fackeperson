@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        retrofit = Retrofit.Builder().baseUrl("https://randomuser.me/api").addConverterFactory(GsonConverterFactory.create()).build()
+        retrofit = Retrofit.Builder().baseUrl("https://randomuser.me/api/").addConverterFactory(GsonConverterFactory.create()).build()
         service = retrofit?.create(FakeProfileService::class.java)
         spinner = findViewById(R.id.spinnerLang)
         spinner?.isSelected =true
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<FakeGeneratorResults>, t: Throwable) {
-                Log.e("FakeGeneretooo","Fake to load");
+                Log.e("FakeGeneretooo",t.stackTraceToString());
             }
 
         } )
