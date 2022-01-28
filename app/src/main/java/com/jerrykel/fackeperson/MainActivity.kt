@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.jerrykel.fackeperson.models.FakeGeneratorResults
 import com.jerrykel.fackeperson.models.FakeProfile
 import retrofit2.Call
@@ -42,13 +43,13 @@ class MainActivity : AppCompatActivity() {
                 call: Call<FakeGeneratorResults>,
                 response: Response<FakeGeneratorResults>
             ) {
-                var profile: FakeProfile? = response.body()?.getResult()
+                val profile: FakeProfile? = response.body()?.getResult()
 
                 (findViewById<TextView>(R.id.textViewName)).text= profile?.getLastName()
                 (findViewById<TextView>(R.id.textViewSurname)).text= profile?.getFirstName()
                 (findViewById<TextView>(R.id.textViewAddress)).text = profile?.getFullAddress()
 
-                //Glide.with(applicationContext).load(Uri.parse(profile?.getPicture())).into((findViewById<ImageView>(R.id.imageViewPicture)))
+                Glide.with(applicationContext).load(Uri.parse(profile?.getPicture())).into((findViewById<ImageView>(R.id.imageViewPicture)))
 
 
 
